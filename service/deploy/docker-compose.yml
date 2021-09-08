@@ -5,7 +5,7 @@ services:
   carlosLogService:
     image: carlos-log-service:latest
     ports:
-      - "8101:8101"
+      - "8001:8001"
     hostname: "docker.portavita.net"
 
 

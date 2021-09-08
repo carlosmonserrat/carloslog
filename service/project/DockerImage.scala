@@ -1,7 +1,9 @@
 import com.typesafe.sbt.packager.Keys
+import com.typesafe.sbt.packager.docker.{Cmd, DockerPermissionStrategy}
 import com.typesafe.sbt.packager.docker.DockerPlugin.autoImport._
 import com.typesafe.sbt.packager.linux.LinuxPlugin.autoImport.defaultLinuxInstallLocation
 import sbt.Keys.{isSnapshot, name, version}
+import sbt.Run
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -10,6 +12,8 @@ object DockerImage {
 
   lazy val publishToRegistry = Seq(
     dockerBaseImage := "openjdk:8-jre-alpine",
+    dockerCommands += Cmd("USER root"),
+    dockerCommands += Cmd("RUN apk add --no-cache bash"),
     Docker / defaultLinuxInstallLocation := "/opt/" + name.value,
     dockerUpdateLatest := true,
     Docker / Keys.daemonUserUid := None,
