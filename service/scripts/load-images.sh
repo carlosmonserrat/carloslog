@@ -11,4 +11,5 @@ fi
 
 echo "-- Loading images"
 docker load -i carlosLogService.image
+docker-compose up -d --remove-orphans
 echo "✔ Service ready"
