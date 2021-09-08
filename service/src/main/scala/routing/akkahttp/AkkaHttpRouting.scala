@@ -15,11 +15,8 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
 
 class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaInjectable with Routing with Logging {
-  private val config: Config = inject[Config]
-
   implicit private val system: ActorSystem = ActorSystem("DVZA-Support-Console-Akka-Http")
   implicit private val executionContext: ExecutionContextExecutor = system.dispatcher
-
 
   override def start(host: String, port: Int): Unit = {
     Http().newServerAt(host, port).bind(routes)
