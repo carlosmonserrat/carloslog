@@ -8,6 +8,16 @@ services:
       - "8001:8001"
     hostname: "docker.portavita.net"
 
+  database:
+    image: postgres
+    restart: always
+    environment:
+        POSTGRES_DB: carloslog
+        POSTGRES_USER: carloslog
+        POSTGRES_PASSWORD: carloslog
+    ports:
+    - "5432:5432"
+
 
 
 

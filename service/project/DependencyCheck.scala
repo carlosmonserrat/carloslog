@@ -6,9 +6,9 @@ object DependencyCheck {
 
   lazy val settings = Seq(
     dependencyCheckFormat := "ALL",
-    dependencyCheckSuppressionFiles := (dependencyCheckSuppressionFiles in ThisBuild).value,
+    dependencyCheckSuppressionFiles := (ThisBuild / dependencyCheckSuppressionFiles).value,
     dependencyCheckAssemblyAnalyzerEnabled := Some(false),
-    dependencyCheckSuppressionFiles in ThisBuild := Seq(baseDirectory.value / "suppressions.xml")
+    ThisBuild / dependencyCheckSuppressionFiles := Seq(baseDirectory.value / "suppressions.xml")
   )
 }
 

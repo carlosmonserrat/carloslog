@@ -5,12 +5,15 @@ object Dependencies {
     akkaDependencies ++
       testDependencies ++
       logbackDependencies ++
-      json4sDependencies
+      json4sDependencies ++
+      dbDependencies ++
+      slickDependencies
 
   private lazy val akkaHttpVersion = "10.2.4"
   private lazy val akkaVersion = "2.6.8"
   private lazy val scaldiVersion = "0.5.8"
-
+  private lazy val postgresVersion: String = "42.2.13"
+  private lazy val slickVersion: String = "3.3.0"
   private lazy val scalamockVersion: String = "4.1.0"
   private lazy val scalatestVersion: String = "3.2.9"
   private lazy val scalamockitoVersion = "1.15.0"
@@ -40,6 +43,15 @@ object Dependencies {
   val logbackDependencies = Seq(
     "ch.qos.logback" % "logback-core" % logbackVersion,
     "ch.qos.logback" % "logback-classic" % logbackVersion
+  )
+
+  val dbDependencies: Seq[ModuleID] = Seq(
+    "org.postgresql" % "postgresql" % postgresVersion
+  )
+
+  val slickDependencies: Seq[ModuleID] = Seq(
+    "com.typesafe.slick" %% "slick" % slickVersion,
+    "com.typesafe.slick" %% "slick-hikaricp" % slickVersion
   )
 
 }

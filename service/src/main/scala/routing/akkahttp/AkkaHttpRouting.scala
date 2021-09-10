@@ -35,31 +35,8 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
       concat(
         get {
           path(Segment) {
-            case "ping" =>
-              complete("pong")
-          }
-        },
-        post {
-          pathPrefix(Segment) {
-            _ => //Any Resource types are accepted
-              path(Segment) {
-                _ => //All Codes are accepted
-                  entity(as[String]) {
-                    listOfResources =>
-                      parameters("transactionId") {
-                        _ =>
-                          complete(
-                            HttpResponse(
-                              entity =
-                                HttpEntity(
-                                  contentType = ContentTypes.`application/json`,
-                                  string =  "Hi"
-                                )
-                            )
-                          )
-                      }
-                  }
-              }
+            case "ping" => complete("pong")
+
           }
         }
       )
