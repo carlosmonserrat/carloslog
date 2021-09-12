@@ -9,8 +9,8 @@ object Dependencies {
       dbDependencies ++
       slickDependencies
 
-  private lazy val akkaHttpVersion = "10.2.4"
-  private lazy val akkaVersion = "2.6.8"
+  private lazy val akkaHttpVersion = "10.2.6"
+  private lazy val akkaVersion = "2.6.16"
   private lazy val scaldiVersion = "0.5.8"
   private lazy val postgresVersion: String = "42.2.13"
   private lazy val slickVersion: String = "3.3.0"
