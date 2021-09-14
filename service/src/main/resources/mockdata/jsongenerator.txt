@@ -1,0 +1,11 @@
+[
+  '{{repeat(20 )}}',
+  {
+         title: '{{lorem(10, "words")}}',
+          image: 'http://placehold.it/600x600',
+    description: '{{lorem(1, "paragraphs")}}',
+    content: '{{lorem(4, "paragraphs")}}'
+  }
+]
+
+https://www.json-generator.com/

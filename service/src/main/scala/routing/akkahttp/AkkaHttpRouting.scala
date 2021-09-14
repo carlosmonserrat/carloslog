@@ -2,10 +2,10 @@ package routing.akkahttp
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import database.{DatabaseDefinition, QueryFactory}
+import database.{Definition, QueryFactory}
 import logging.Logging
 import routing.Routing
 import scaldi.akka.AkkaInjectable
@@ -19,16 +19,18 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
   implicit private val system: ActorSystem = ActorSystem("DVZA-Support-Console-Akka-Http")
   implicit private val executionContext: ExecutionContextExecutor = system.dispatcher
   private val queryFactory = inject[QueryFactory]
-  private val db = inject[DatabaseDefinition]
+  private val db = inject[Definition]
   private val routes: Route = {
     Route.seal(
       concat(
         get {
           path(Segment) {
-            case "ping" => complete("pong")
+            case "ping" => complete(
+              HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>")
+            )
             case "data" =>
-              println("data")
-              onComplete(for {results <- db.run(queryFactory.selectArticle().as[List[String]](GetResult(result => List(result.nextString(), result.nextString(), result.nextString())))).map(_.flatten.toList)}
+
+              onComplete(for {results <- db.run(queryFactory.selectArticleQuery().as[List[String]](GetResult(result => List(result.nextString(), result.nextString(), result.nextString())))).map(_.flatten.toList)}
                 yield {
                   results
                 }) {

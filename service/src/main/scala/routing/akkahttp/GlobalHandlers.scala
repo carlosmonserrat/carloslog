@@ -18,7 +18,7 @@ object GlobalHandlers extends Logging {
               status = StatusCodes.MethodNotAllowed.intValue,
               entity = HttpEntity(ContentTypes.`application/json`,
                 s"""{
-              "status":"error: The requested path '${path}' does not exist.
+              "status":"error: The requested path '${path}' does not exist."
               }""")
             )
           )
