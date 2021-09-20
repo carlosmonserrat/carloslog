@@ -6,7 +6,9 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusC
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import database.{Definition, QueryFactory}
+import json.JsonConversion
 import logging.Logging
+import models.Article
 import routing.Routing
 import scaldi.akka.AkkaInjectable
 import scaldi.{Injectable, Injector}
@@ -28,13 +30,27 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
             case "ping" => complete(
               HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>")
             )
-            case "data" =>
-
-              onComplete(for {results <- db.run(queryFactory.selectArticleQuery().as[List[String]](GetResult(result => List(result.nextString(), result.nextString(), result.nextString())))).map(_.flatten.toList)}
+            case "articles" =>
+              onComplete(
+                for {
+                  articles <- db.run(queryFactory.selectArticlesQuery().as[Article](GetResult(result =>
+                    Article(
+                      id = Some(result.nextString()),
+                      title = Some(result.nextString()),
+                      createDate = Some(result.nextString()),
+                      lastUpdate = Some(result.nextString()),
+                      image = Some(result.nextString()),
+                      description = Some(result.nextString()),
+                      content = Some(result.nextString(),
+                      )
+                    )
+                  )))
+                }
                 yield {
-                  results
-                }) {
-                case Success(value) => complete(s"The result was $value")
+                  articles
+                }.toList
+              ) {
+                case Success(articles) => complete(JsonConversion.writeJsonList[Article](articles))
                 case Failure(ex) => complete(StatusCodes.InternalServerError, s"An error occurred: ${ex.getMessage}")
               }
 

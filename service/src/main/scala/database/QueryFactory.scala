@@ -40,9 +40,9 @@ class QueryFactory {
     }
   }
 
-  def selectArticleQuery(): SQLActionBuilder = {
+  def selectArticlesQuery(): SQLActionBuilder = {
     sql"""
-         SELECT title,create_date,image,description,content from articles
+         SELECT id,title,create_date,last_update,image,description,content from articles
        """
   }
 
