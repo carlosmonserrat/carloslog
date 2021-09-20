@@ -31,6 +31,7 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
               HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>")
             )
             case "articles" =>
+              //TODO ADD PAGINATION
               onComplete(
                 for {
                   articles <- db.run(queryFactory.selectArticlesQuery().as[Article](GetResult(result =>
