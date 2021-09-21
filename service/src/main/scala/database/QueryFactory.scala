@@ -40,9 +40,14 @@ class QueryFactory {
     }
   }
 
-  def selectArticlesQuery(): SQLActionBuilder = {
+  def totalArticles:SQLActionBuilder={
+    sql"SELECT Count(id) from articles"
+  }
+
+  def selectArticlesQuery(offset: String, limit: String): SQLActionBuilder = {
     sql"""
-         SELECT id,title,create_date,last_update,image,description,content from articles
+         SELECT id,title,create_date,last_update,image,description,content
+         FROM articles ORDER BY create_date OFFSET #$offset LIMIT #$limit
        """
   }
 

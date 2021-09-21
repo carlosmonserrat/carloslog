@@ -31,7 +31,7 @@ object GlobalHandlers extends Logging {
           status = StatusCodes.BadRequest.intValue,
           entity = HttpEntity(ContentTypes.`application/json`,
             s"""{
-              "status":"error: The query parameter in invalid, '${e.parameterName}' is missing.
+              "status":"error: The query parameter in invalid, '${e.parameterName}' is missing."
               }""")
         )
       )
@@ -43,7 +43,7 @@ object GlobalHandlers extends Logging {
           status = StatusCodes.MethodNotAllowed.intValue,
           entity = HttpEntity(ContentTypes.`application/json`,
             s"""{
-              "status":"error: ${StatusCodes.MethodNotAllowed.defaultMessage}
+              "status":"error: ${StatusCodes.MethodNotAllowed.defaultMessage}"
               }""")
         )
       )
@@ -67,7 +67,7 @@ object GlobalHandlers extends Logging {
           status = StatusCodes.InternalServerError.intValue,
           entity = HttpEntity(ContentTypes.`application/json`,
             s"""{
-              "status":"error:${e.getStackTrace.mkString}
+              "status":"error:${e.getStackTrace.mkString}"
               }""")
         )
       )

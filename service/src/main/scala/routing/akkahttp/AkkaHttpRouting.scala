@@ -26,36 +26,50 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
     Route.seal(
       concat(
         get {
-          path(Segment) {
-            case "ping" => complete(
-              HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>")
-            )
-            case "articles" =>
-              //TODO ADD PAGINATION
-              onComplete(
-                for {
-                  articles <- db.run(queryFactory.selectArticlesQuery().as[Article](GetResult(result =>
-                    Article(
-                      id = Some(result.nextString()),
-                      title = Some(result.nextString()),
-                      createDate = Some(result.nextString()),
-                      lastUpdate = Some(result.nextString()),
-                      image = Some(result.nextString()),
-                      description = Some(result.nextString()),
-                      content = Some(result.nextString(),
+          parameterMap { parameters =>
+            path(Segment) {
+              case "ping" => complete(
+                HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>")
+              )
+              case "articles" =>
+                //TODO ADD PAGINATION
+                onComplete{
+                  for {
+                    articles <- db.run(queryFactory.selectArticlesQuery(parameters("offset"), parameters("limit")).as[Article](GetResult(result =>
+                      Article(
+                        id = Some(result.nextString()),
+                        title = Some(result.nextString()),
+                        createDate = Some(result.nextString()),
+                        lastUpdate = Some(result.nextString()),
+                        image = Some(result.nextString()),
+                        description = Some(result.nextString()),
+                        content = Some(result.nextString(),
+                        )
                       )
-                    )
-                  )))
-                }
-                yield {
-                  articles
-                }.toList
-              ) {
-                case Success(articles) => complete(JsonConversion.writeJsonList[Article](articles))
-                case Failure(ex) => complete(StatusCodes.InternalServerError, s"An error occurred: ${ex.getMessage}")
-              }
+                    )))
 
+                    total <- db.run(queryFactory.totalArticles.as[String](GetResult(result =>
+                      result.nextString()
+                    )))
+
+                  }
+                  yield {
+                    val page = total
+println(page)
+                    articles
+                  }.toList
+
+
+
+            } {
+                  case Success(articles) => complete(JsonConversion.writeJsonList[Article](articles))
+                  case Failure(ex) => complete(StatusCodes.InternalServerError, s"An error occurred: ${ex.getMessage}")
+                }
+
+            }
           }
+
+
         }
       )
     )(
