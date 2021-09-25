@@ -8,7 +8,7 @@ import logging.Logging
 
 object GlobalHandlers extends Logging {
 
-  def globalRejectionHandlerJson: RejectionHandler = RejectionHandler
+  def globalRejectionHandler: RejectionHandler = RejectionHandler
     .newBuilder
     .handleNotFound {
       Directives.extractUnmatchedPath {
@@ -50,7 +50,7 @@ object GlobalHandlers extends Logging {
     }
     .result()
 
-  def globalExceptionHandlerJson: ExceptionHandler = ExceptionHandler {
+  def globalExceptionHandler: ExceptionHandler = ExceptionHandler {
     case e: JsonParseException =>
       complete(
         HttpResponse(
@@ -62,6 +62,7 @@ object GlobalHandlers extends Logging {
         )
       )
     case e: Throwable =>
+      e.printStackTrace()
       complete(
         HttpResponse(
           status = StatusCodes.InternalServerError.intValue,

@@ -3,6 +3,7 @@ import database.{Definition, Operations, QueryFactory}
 import executioncontext.ExecutionContextFactory
 import routing.Routing
 import routing.akkahttp.AkkaHttpRouting
+import routing.controllers.Articles
 import scaldi.Module
 
 class ServiceModule extends Module {
@@ -13,4 +14,7 @@ class ServiceModule extends Module {
   bind[QueryFactory] to injected[QueryFactory]
   bind[Operations] to injected[Operations]
   bind[ExecutionContextFactory] to injected[ExecutionContextFactory]
+
+  //Controllers
+  bind[Articles] to injected[Articles]
 }

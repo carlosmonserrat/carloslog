@@ -1,80 +1,46 @@
 package routing.akkahttp
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import database.{Definition, QueryFactory}
-import json.JsonConversion
+import akka.pattern.ask
+import akka.util.Timeout
 import logging.Logging
-import models.Article
 import routing.Routing
+import routing.controllers.Articles
+import routing.controllers.Articles.GetArticles
 import scaldi.akka.AkkaInjectable
 import scaldi.{Injectable, Injector}
-import slick.jdbc.GetResult
 
-import scala.concurrent.{ExecutionContextExecutor, Future}
+import scala.concurrent.ExecutionContextExecutor
+import scala.concurrent.duration.{FiniteDuration, MINUTES}
 import scala.util.{Failure, Success}
 
 class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaInjectable with Routing with Logging {
   implicit private val system: ActorSystem = ActorSystem("DVZA-Support-Console-Akka-Http")
   implicit private val executionContext: ExecutionContextExecutor = system.dispatcher
-  private val queryFactory = inject[QueryFactory]
-  private val db = inject[Definition]
+  implicit lazy val akkaActorRequestTimeOut: Timeout = Timeout(FiniteDuration(5, MINUTES))
+
+  val articles: ActorRef = injectActorRef[Articles]
+
   private val routes: Route = {
     Route.seal(
       concat(
         get {
           parameterMap { parameters =>
             path(Segment) {
-              case "ping" => complete(
-                HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>")
-              )
-              case "articles" =>
-                //TODO ADD PAGINATION
-                onComplete{
-                  for {
-                    articles <- db.run(queryFactory.selectArticlesQuery(parameters("offset"), parameters("limit")).as[Article](GetResult(result =>
-                      Article(
-                        id = Some(result.nextString()),
-                        title = Some(result.nextString()),
-                        createDate = Some(result.nextString()),
-                        lastUpdate = Some(result.nextString()),
-                        image = Some(result.nextString()),
-                        description = Some(result.nextString()),
-                        content = Some(result.nextString(),
-                        )
-                      )
-                    )))
-
-                    total <- db.run(queryFactory.totalArticles.as[String](GetResult(result =>
-                      result.nextString()
-                    )))
-
-                  }
-                  yield {
-                    val page = total
-println(page)
-                    articles
-                  }.toList
-
-
-
-            } {
-                  case Success(articles) => complete(JsonConversion.writeJsonList[Article](articles))
-                  case Failure(ex) => complete(StatusCodes.InternalServerError, s"An error occurred: ${ex.getMessage}")
-                }
-
+              case "ping" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>"))
+              case "favicon.ico" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "no ico"))
+              case "articles" => complete((articles ? GetArticles(parameters)).mapTo[HttpResponse])
             }
           }
-
-
         }
       )
     )(
-      rejectionHandler = GlobalHandlers.globalRejectionHandlerJson,
-      exceptionHandler = GlobalHandlers.globalExceptionHandlerJson
+      rejectionHandler = GlobalHandlers.globalRejectionHandler,
+      exceptionHandler = GlobalHandlers.globalExceptionHandler
     )
   }
 
@@ -88,9 +54,5 @@ println(page)
           e.printStackTrace()
           system.terminate()
       }
-  }
-
-  private def completeSuccess(response: Future[HttpResponse], endpoint: String): Future[HttpResponse] = {
-    response
   }
 }

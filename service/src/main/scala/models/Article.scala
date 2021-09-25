@@ -1,5 +1,5 @@
 package models
-
+//TODO add meta tags
 case class Article(id: Option[String],
                    title: Option[String],
                    createDate: Option[String],
