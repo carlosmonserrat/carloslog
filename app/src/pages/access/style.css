@@ -1,0 +1,49 @@
+body{
+    background-color: #262A46;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: 84px auto;
+    text-align: center;
+}
+
+.login-form-input {
+    margin: 4px;
+    padding: 4px;
+}
+
+.login-form-label {
+    color: #fff;
+    margin-left: 4px;
+    align-self: flex-start;
+}
+
+.login-form-button {
+    margin: 12px;
+    width: 100px;
+    height: 24px;
+    align-self: center;
+    border-radius: 5px;
+    border: none;
+    background-color: #33BCD7;
+    color: #fff;
+    transition: 1s;
+}
+
+.login-form-button:hover {
+    opacity: 0.7;
+}
+
+.error-message{
+    color: red;
+    font-size: x-small;
+}
+
+@media only screen and (max-width: 430px) {
+    .login-form {
+        width: 300px;
+    }
+}
