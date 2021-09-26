@@ -7,6 +7,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.pattern.ask
 import akka.util.Timeout
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import logging.Logging
 import routing.Routing
 import routing.controllers.Articles
@@ -27,7 +28,7 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
 
   private val routes: Route = {
     Route.seal(
-      concat(
+      cors()(
         get {
           parameterMap { parameters =>
             path(Segment) {

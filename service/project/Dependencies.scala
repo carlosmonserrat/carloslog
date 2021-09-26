@@ -7,7 +7,8 @@ object Dependencies {
       logbackDependencies ++
       json4sDependencies ++
       dbDependencies ++
-      slickDependencies
+      slickDependencies ++
+      routeDependencies
 
   private lazy val akkaHttpVersion = "10.2.6"
   private lazy val akkaVersion = "2.6.16"
@@ -19,6 +20,7 @@ object Dependencies {
   private lazy val scalamockitoVersion = "1.15.0"
   private lazy val logbackVersion: String = "1.2.3"
   private lazy val json4sVersion = "3.6.7"
+  private lazy val akkaHttpCorsVersion = "0.4.1"
 
   val akkaDependencies = Seq(
     "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
@@ -38,6 +40,10 @@ object Dependencies {
     "org.scalamock" %% "scalamock" % scalamockVersion % "test",
     "org.scalatest" %% "scalatest" % scalatestVersion % "test",
     "org.mockito" %% "mockito-scala" % scalamockitoVersion
+  )
+
+  val routeDependencies = Seq(
+    "ch.megard" %% "akka-http-cors" % akkaHttpCorsVersion
   )
 
   val logbackDependencies = Seq(

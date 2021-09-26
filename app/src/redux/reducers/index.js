@@ -1,24 +1,24 @@
 import {combineReducers} from 'redux';
-import {SAID_SOMETHING_SUCCEED} from "../actions"
+import {REQUEST_ARTICLES_SUCCEED} from "../actions"
 
-
-//*****************
 const initialState = {
-  something: "",
+  articlesBody: {
+    articles: [],
+    pagination: {}
+  },
 }
 
-const saySomething = (state = initialState.something, action)=> {
+const articlesBody = (state = initialState.articlesBody, action) => {
   switch (action.type) {
-    case SAID_SOMETHING_SUCCEED:
-      return action.message
+    case REQUEST_ARTICLES_SUCCEED:
+      return action.body
     default:
       return state
   }
 }
-//*****************
 
 const reducers = combineReducers({
-  saySomething: saySomething
+  articlesBody: articlesBody
 })
 
 export default reducers

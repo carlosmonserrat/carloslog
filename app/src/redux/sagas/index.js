@@ -1,30 +1,18 @@
-import {delay, takeLatest, all, put} from 'redux-saga/effects'
-import {SAY_SOMETHING, saySomethingSucceed} from "../actions";
+import {takeLatest, all, put, call} from 'redux-saga/effects'
+import {REQUEST_ARTICLES, requestArticlesSucceed} from "../actions";
 
-const saySomethingAsync = function* (action) {
-  try {
-    yield delay(500);
-    yield put(saySomethingSucceed(action.message))
-    action.formik.setErrors({
-      email: "CACA email",
-      password: "CACA password"
-    });
-  } catch (error) {
-    action.formik.setErrors({
-      email: "CACA email",
-      password: "CACA password"
-    });
-  } finally {
-    action.formik.setSubmitting(false);
-  }
+const requestArticles = function* (action) {
+  const response = yield call(fetch, action.apiUrl)
+  const body = yield call([response, 'json']);
+  yield put(requestArticlesSucceed(body))
 };
 
-export function* watchSay() {
-  yield takeLatest(SAY_SOMETHING, saySomethingAsync)
+export function* requests() {
+  yield takeLatest(REQUEST_ARTICLES, requestArticles)
 }
 
 export default function* rootSaga() {
-  yield all([watchSay()])
+  yield all([requests()])
 }
 
 

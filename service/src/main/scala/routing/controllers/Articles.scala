@@ -7,7 +7,7 @@ import com.typesafe.config.Config
 import database.{Definition, QueryFactory}
 import json.JsonConversion
 import logging.Logging
-import models.{Article, Pages}
+import models.{Article, Pages, Pagination}
 import routing.controllers.Articles.GetArticles
 import scaldi.Injector
 import scaldi.akka.AkkaInjectable
@@ -69,9 +69,11 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
         val lastPage = totalValue.toInt / limit
 
         val pages = Pages(
-          previousPage = if (page == 1) None else Some(s"http://localhost:8001/articles?page=$previousPage&offset=$previousOffset&limit=${limit}"),
-          currentPage = s"http://localhost:8001/articles?page=${page}&offset=${offset}&limit=${limit}",
-          nextPage = if (page == lastPage) None else Some(s"http://localhost:8001/articles?page=$nextPage&offset=$nextOffset&limit=${limit}"),
+          pagination = Pagination(
+            previousPage = if (page == 1) None else Some(s"http://localhost:8001/articles?page=$previousPage&offset=$previousOffset&limit=${limit}"),
+            currentPage = s"http://localhost:8001/articles?page=${page}&offset=${offset}&limit=${limit}",
+            nextPage = if (page == lastPage) None else Some(s"http://localhost:8001/articles?page=$nextPage&offset=$nextOffset&limit=${limit}")
+          ),
           articles = articlesValues.toList)
 
         HttpResponse(entity =

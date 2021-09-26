@@ -1,17 +1,21 @@
-export const SAY_SOMETHING = 'SAY_SOMETHING';
-export const SAID_SOMETHING_SUCCEED = 'SAID_SOMETHING_SUCCEED';
+export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
+export const REQUEST_ARTICLES_SUCCEED = 'REQUEST_ARTICLES_SUCCEED';
 
-export const saySomething = (message,formik) => {
+export const requestArticles = (apiUrl) => {
   return {
-    type: SAY_SOMETHING,
-    message: message,
-    formik:formik
+    type: REQUEST_ARTICLES,
+    apiUrl:apiUrl
   }
 };
 
-export const saySomethingSucceed = (message) => ({
-  type: SAID_SOMETHING_SUCCEED,
-  message: message,
-});
+export const requestArticlesSucceed = (body) => (
+  {
+    type: REQUEST_ARTICLES_SUCCEED,
+    body: {
+      articles: body.articles,
+      pagination: body.pagination
+    }
+  }
+);
 
 

@@ -1,0 +1,6 @@
+.pagination{
+    position: fixed;
+    bottom: 0px;
+    background-color: white;
+    padding: 16px;
+}

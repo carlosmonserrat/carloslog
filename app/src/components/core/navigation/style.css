@@ -1,0 +1,45 @@
+.navLinkText:link, .navLinkText:visited {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.navLinkText:hover, .navLinkText:active, .navLinkText:focus, .navLinkText:target, .navLinkText:focus-visible {
+  color: var(--secondary-color);
+  outline: none;
+}
+
+.navLinkPipe {
+  font-size: 16px;
+  color: var(--contrast-color);
+  padding: 0 4px 0 16px;
+}
+
+.navBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  background-color: rgba(255, 255, 255, 0.9);
+  top: 0;
+  left: 0;
+}
+
+.navLinkGroup {
+  padding: 8px;
+}
+
+.navLogoGroup {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navLogo {
+  padding: 8px;
+}

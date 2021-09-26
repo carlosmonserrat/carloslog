@@ -1,14 +1,10 @@
 import React from 'react'
-import Access from "./pages/access";
-import SagaExample from "./components/sagaexample";
+import MainPage from "./pages/main";
 
 function App() {
 
   return (
-    <div>
-      <Access/>
-      <SagaExample/>
-    </div>
+    <MainPage/>
   );
 }
 

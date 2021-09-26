@@ -1,0 +1,15 @@
+:root {
+  --main-bg-color: #050035;
+  --primary-color: #050035;
+  --secondary-color: #F68922;
+  --contrast-color: #8F83FF;
+  --fonts-default-color:#FFFFFF;
+  --fonts-contrast-color:#F68922;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  margin: 0;
+  padding: 0;
+  color:gray;
+}
