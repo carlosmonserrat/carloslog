@@ -5,21 +5,12 @@
   color: var(--primary-color);
   text-decoration: none;
   transition: 0.3s ease;
+  padding: 0 8px;
+  position: relative;
 }
 
 .navLinkText:hover, .navLinkText:active, .navLinkText:focus, .navLinkText:target, .navLinkText:focus-visible {
   outline: none;
-}
-
-.navLinkText:before{
-  content: "|";
-  margin:0 4px 0 4px;
-}
-
-.navLinkText:before:hover{
-  color: red;
-  content: "-";
-  margin:0 4px 0 4px;
 }
 
 .navBar {
@@ -28,13 +19,14 @@
   align-items: center;
   justify-content: space-between;
   position: sticky;
-  background-color: rgba(1, 150, 108, 0.9);
+  background-color: rgba(1, 150, 108, 0.8);
   top: 0;
   left: 0;
+  z-index: 1000;
 }
 
 .navLinkGroup {
-  padding: 8px;
+  padding: 8px 0;
 }
 
 .navLogoGroup {
@@ -45,5 +37,22 @@
 }
 
 .navLogo {
-  padding: 8px;
+   padding: 16px 0;
+ }
+
+.border  {
+  border-left: 2px solid white;
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left:0px;
+  transition: 0.2s;
+}
+
+.navLinkText:hover{
+  padding-left: 12px;
+}
+
+.navLinkText:hover .border{
+  border-left: 8px solid white;
 }
