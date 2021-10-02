@@ -1,9 +1,9 @@
 package models
 //TODO add meta tags
-case class Article(id: Option[String],
-                   title: Option[String],
-                   createDate: Option[String],
-                   lastUpdate: Option[String],
-                   image: Option[String],
-                   description: Option[String],
-                   content: Option[String])
+case class Article(id: Option[String]=None,
+                   title: Option[String]=None,
+                   createDate: Option[String]=None,
+                   lastUpdate: Option[String]=None,
+                   image: Option[String]=None,
+                   description: Option[String]=None,
+                   content: Option[String]=None)

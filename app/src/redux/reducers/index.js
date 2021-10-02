@@ -1,11 +1,12 @@
 import {combineReducers} from 'redux';
-import {REQUEST_ARTICLES_SUCCEED} from "../actions"
+import {REQUEST_ARTICLES_SUCCEED,REQUEST_ARTICLE_SUCCEED} from "../actions"
 
 const initialState = {
   articlesBody: {
     articles: [],
     pagination: {}
   },
+  articleBody:{}
 }
 
 const articlesBody = (state = initialState.articlesBody, action) => {
@@ -17,8 +18,18 @@ const articlesBody = (state = initialState.articlesBody, action) => {
   }
 }
 
+const articleBody = (state = initialState.articleBody, action) => {
+  switch (action.type) {
+    case REQUEST_ARTICLE_SUCCEED:
+      return action.body
+    default:
+      return state
+  }
+}
+
 const reducers = combineReducers({
-  articlesBody: articlesBody
+  articlesBody: articlesBody,
+  articleBody:articleBody
 })
 
 export default reducers

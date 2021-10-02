@@ -7,7 +7,7 @@ const ItemArticle = ({article}) => {
     <article className={blogPostArticle}>
       <Link to={{
         pathname: "/article",
-        state: {article}
+        search: `?id=${article.id}`,
       }} className={blogPostLink}>
         <div className={border}/>
         <h1 className={blogPostTitle}>{article.title}</h1>

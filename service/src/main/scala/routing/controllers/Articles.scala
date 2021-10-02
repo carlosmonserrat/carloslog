@@ -8,7 +8,7 @@ import database.{Definition, QueryFactory}
 import json.JsonConversion
 import logging.Logging
 import models.{Article, Pages, Pagination}
-import routing.controllers.Articles.GetArticles
+import routing.controllers.Articles.{GetArticle, GetArticles}
 import scaldi.Injector
 import scaldi.akka.AkkaInjectable
 import slick.jdbc.GetResult
@@ -27,6 +27,38 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
     case GetArticles(parameters) =>
       getArticles(parameters)
 
+    case GetArticle(parameters) =>
+      getArticleContent(parameters)
+
+  }
+
+  def getArticleContent(parameters: Map[String, String]): Future[HttpResponse] = {
+
+    val articleId = parameters.getOrElse("id", "")
+    (for {
+      article <- db.run(queryFactory.selectArticleQuery(articleId).as[Article](GetResult(result =>
+        Article(
+          id = Some(result.nextString()),
+          title = Some(result.nextString()),
+          createDate = Some(result.nextString()),
+          lastUpdate = Option(result.nextString()),
+          image = Some(result.nextString()),
+          description = Some(result.nextString()),
+          content = Some(result.nextString())
+        )
+      )))
+    }
+      yield {
+        article.headOption.map(value =>
+          HttpResponse(entity =
+            HttpEntity(ContentTypes.`application/json`, JsonConversion.writeJson[Article](value))
+          )
+        ).getOrElse(
+          HttpResponse(entity =
+            HttpEntity(ContentTypes.`application/json`, "{}")
+          )
+        )
+      }) pipeTo sender()
   }
 
   def getArticles(parameters: Map[String, String]): Future[HttpResponse] = {
@@ -44,8 +76,7 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
           createDate = Some(result.nextString()),
           lastUpdate = Option(result.nextString()),
           image = Some(result.nextString()),
-          description = Some(result.nextString()),
-          content = Some(result.nextString())
+          description = Some(result.nextString())
         )
       )))
     }
@@ -87,5 +118,7 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
 object Articles {
 
   case class GetArticles(parameters: Map[String, String])
+
+  case class GetArticle(parameters: Map[String, String])
 
 }

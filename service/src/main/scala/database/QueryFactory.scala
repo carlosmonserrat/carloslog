@@ -32,24 +32,38 @@ class QueryFactory {
     val timeNow = LocalDateTime.now().toString()
     article match {
       case Article(_, Some(title), _, _, Some(image), Some(description), Some(content)) =>
+        val id =randomUUID
         sql"""
-         INSERT INTO articles (id, title,create_date, image, description, content)
-         VALUES ('#$randomUUID', '#${title.querySanitize}','#$timeNow', '#${image.querySanitize}', '#${description.querySanitize}', '#${content.querySanitize}');
+         INSERT INTO articles_content (id, content)
+         VALUES ('#${id.querySanitize}','#${content.querySanitize}');
+
+         INSERT INTO articles_meta (id, title,create_date, image, description)
+         VALUES ('#${id.querySanitize}', '#${title.querySanitize}','#$timeNow', '#${image.querySanitize}', '#${description.querySanitize}');
          """
       case _ => sql""
     }
   }
 
-  def totalArticles:SQLActionBuilder={
-    sql"SELECT Count(id) from articles"
+  def totalArticles: SQLActionBuilder = {
+    sql"SELECT Count(id) from articles_meta"
   }
 
   def selectArticlesQuery(offset: Int, limit: Int): SQLActionBuilder = {
     sql"""
-         SELECT id,title,create_date,last_update,image,description,content
-         FROM articles ORDER BY create_date OFFSET #$offset LIMIT #$limit
+         SELECT id,title,create_date,last_update,image,description
+         FROM articles_meta ORDER BY create_date OFFSET #$offset LIMIT #$limit
        """
   }
+
+  def selectArticleQuery(id: String): SQLActionBuilder = {
+    sql"""
+         SELECT c.id,m.title,m.create_date,m.last_update,m.image,m.description,c.content
+         FROM articles_content as c, articles_meta as m
+         WHERE c.id=m.id
+         AND c.id = '#${id.querySanitize}'
+       """
+  }
+
 
 }
 
@@ -59,13 +73,15 @@ object QueryFactory {
     def querySanitize: String = query.replace("'", "''")
   }
 
+  val tables = Map(
+    "articles_meta" -> """ id varchar(255), title varchar(255), create_date timestamp, last_update timestamp, image text, description text """,
+    "articles_content" -> """ id varchar(255), content text """
+  )
+
   def queryToString(query: SQLActionBuilder): String = {
     query.queryParts.mkString("").replace("\n", "")
   }
 
   case class TableDefinitions(tableName: String, definition: String)
 
-  val tables = Map(
-    "articles" -> """ id varchar(255), title varchar(255), create_date timestamp, last_update timestamp, image text, description text, content text """
-  )
 }

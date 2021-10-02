@@ -11,7 +11,7 @@ import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import logging.Logging
 import routing.Routing
 import routing.controllers.Articles
-import routing.controllers.Articles.GetArticles
+import routing.controllers.Articles.{GetArticle, GetArticles}
 import scaldi.akka.AkkaInjectable
 import scaldi.{Injectable, Injector}
 
@@ -35,6 +35,7 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
               case "ping" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>"))
               case "favicon.ico" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "no ico"))
               case "articles" => complete((articles ? GetArticles(parameters)).mapTo[HttpResponse])
+              case "article" => complete((articles ? GetArticle(parameters)).mapTo[HttpResponse])
             }
           }
         }
