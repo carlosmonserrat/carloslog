@@ -6,10 +6,8 @@ const Pagination = ({pagination, getNewPages}) => {
     <div className={style.pagination}>
       {pagination !== {} && pagination.previousPage !== undefined ?
         <button onClick={() => getNewPages(pagination.previousPage)}>Previous Page</button> : <></>}
-
       {pagination !== {} && pagination.nextPage !== undefined ?
         <button onClick={() => getNewPages(pagination.nextPage)}>Next Page</button> : <></>}
-
     </div>
   )
 }
