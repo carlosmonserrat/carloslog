@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { border,navLogoGroup,navLogo,navBar,navLinkGroup,navLinkText} from "./style.module.css";
+import {border, navLogoGroup, navLogo, navBar, navLinkGroup, navLinkText} from "./style.module.css";
+import {Link} from "react-router-dom";
 
 const Navigation = () => {
   return (
@@ -15,22 +16,16 @@ const Navigation = () => {
         </svg>
       </div>
       <nav className={navBar}>
-
-          <div className={navLinkGroup}>
-            <a href="#" className={navLinkText}>
-              <div className={border}/>
-              Home
-            </a>
-            <a href="#" className={navLinkText}>
-              <div className={border}/>
-              About Me
-            </a>
-            <a href="#" className={navLinkText}>
-              <div className={border}/>
-              Categories
-            </a>
-          </div>
-
+        <div className={navLinkGroup}>
+          <Link to="/" className={navLinkText}>
+            <div className={border}/>
+            Home
+          </Link>
+          <Link to="/about" className={navLinkText}>
+            <div className={border}/>
+            About Me
+          </Link>
+        </div>
       </nav>
     </>
 

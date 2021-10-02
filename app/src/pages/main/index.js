@@ -2,7 +2,6 @@ import React from 'react'
 import {useEffect} from "react";
 import ItemArticle from "../../components/core/list_articles/item_article";
 import Layout from "../../layout";
-import Navigation from "../../components/core/navigation";
 import {useDispatch, useSelector} from "react-redux";
 import {requestArticles} from "../../redux/actions";
 import Pagination from "../../components/core/pagination";
@@ -23,7 +22,6 @@ const MainPage = () => {
 
   return (
     <div>
-      <Navigation/>
       <Layout>
         {articlesBody.articles.map(
           article =>
