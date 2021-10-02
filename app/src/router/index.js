@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Navigation from "../components/core/navigation";
 import About from "../pages/about";
+import ArticlePost from "../pages/articlePost";
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
       <Switch>
         <Route path="/" exact component={MainPage}/>
         <Route path="/about" exact component={About}/>
+        <Route path="/article" exact component={ArticlePost}/>
       </Switch>
     </BrowserRouter>
   )

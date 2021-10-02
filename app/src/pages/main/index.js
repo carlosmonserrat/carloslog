@@ -8,17 +8,17 @@ import Pagination from "../../components/core/pagination";
 
 const MainPage = () => {
   const articlesBody = useSelector(state => state.articlesBody);
-  const dispatch = useDispatch();
   const apiUrl = process.env.REACT_APP_API_URL
-  const articlesUri= apiUrl+"/articles"
+  const articlesUri = apiUrl + "/articles"
 
+  const dispatch = useDispatch();
   const getNewArticles = (uri) => {
     dispatch(requestArticles(uri))
   }
 
   useEffect(() => {
-    getNewArticles(articlesUri)
-  }, [dispatch])
+    dispatch(requestArticles(articlesUri))
+  }, [dispatch, articlesUri])
 
   return (
     <div>
