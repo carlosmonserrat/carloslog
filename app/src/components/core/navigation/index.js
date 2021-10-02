@@ -15,7 +15,7 @@ const Navigation = () => {
         </svg>
       </div>
       <nav className={navBar}>
-        <div className={"container"}>
+
           <div className={navLinkGroup}>
             <a href="#" className={navLinkText}>
               <div className={border}/>
@@ -30,7 +30,7 @@ const Navigation = () => {
               Categories
             </a>
           </div>
-        </div>
+
       </nav>
     </>
 

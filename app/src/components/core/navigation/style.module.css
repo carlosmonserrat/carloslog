@@ -7,6 +7,7 @@
   transition: 0.3s ease;
   padding: 0 8px;
   position: relative;
+  text-shadow: rgb(0, 0, 0) 2px 2px 8px;
 }
 
 .navLinkText:hover, .navLinkText:active, .navLinkText:focus, .navLinkText:target, .navLinkText:focus-visible {
@@ -26,7 +27,7 @@
 }
 
 .navLinkGroup {
-  padding: 8px 0;
+  padding: 8px 72px;
 }
 
 .navLogoGroup {
@@ -55,4 +56,12 @@
 
 .navLinkText:hover .border{
   border-left: 8px solid white;
+}
+
+@media only screen and (max-width: 360px) {
+  .navLinkGroup {
+    padding: 8px 0;
+    margin: 0 auto;
+  }
+
 }

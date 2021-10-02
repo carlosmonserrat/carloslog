@@ -1,13 +1,15 @@
 import * as React from 'react'
-import {pagination} from "./style.css"
+import style from "./style.module.css"
 
 const Pagination = ({pagination, getNewPages}) => {
   return (
-    <div className={"pagination"}>
-      {pagination !== {} && pagination.nextPage !== undefined ?
-        <button onClick={() => getNewPages(pagination.nextPage)}>Next Page</button> : <></>}
+    <div className={style.pagination}>
       {pagination !== {} && pagination.previousPage !== undefined ?
         <button onClick={() => getNewPages(pagination.previousPage)}>Previous Page</button> : <></>}
+
+      {pagination !== {} && pagination.nextPage !== undefined ?
+        <button onClick={() => getNewPages(pagination.nextPage)}>Next Page</button> : <></>}
+
     </div>
   )
 }
