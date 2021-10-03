@@ -5,6 +5,7 @@ import Layout from "../../layout";
 import {useDispatch, useSelector} from "react-redux";
 import {requestArticles} from "../../redux/actions";
 import Pagination from "../../components/core/pagination";
+import { useLocation } from "react-router-dom";
 
 const MainPage = () => {
   const articlesBody = useSelector(state => state.articlesBody);
@@ -15,6 +16,13 @@ const MainPage = () => {
   const getNewArticles = (uri) => {
     dispatch(requestArticles(uri))
   }
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
 
   useEffect(() => {
     dispatch(requestArticles(articlesUri))

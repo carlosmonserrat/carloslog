@@ -1,0 +1,46 @@
+.blogPostArticle {
+    margin: 32px 0 16px 0;
+}
+
+.blogPost {
+    text-decoration: none;
+    color: var(--fonts-default-color);
+    position: relative;
+}
+.blogPostTitle {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding-left: 8px;
+    transition: 0.2s;
+    font-size:22px;
+}
+
+.blogPostCategory {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--fonts-contrast-color);
+}
+
+.blogPostCategory:after {
+    content: "|";
+    color: white;
+    margin: 0 2px 0 2px;
+}
+
+.blogPostDate {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    padding-left: 8px;
+    transition: 0.2s;
+}
+
+.blogPostParagraph {
+    font-family: 'Merriweather', serif;
+    font-size: 16px;
+    color: var(--fonts-default-color);
+}
+
+

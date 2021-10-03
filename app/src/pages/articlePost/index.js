@@ -3,6 +3,13 @@ import Layout from "../../layout";
 import {useQuery} from "../../hooks";
 import {useDispatch, useSelector} from "react-redux";
 import {requestArticle} from "../../redux/actions";
+import {useLocation} from "react-router-dom";
+import {
+  blogPostDate,
+  blogPostParagraph,
+  blogPostTitle,
+  blogPost
+} from "./style.module.css";
 
 const ArticlePost = () => {
   const query = useQuery();
@@ -17,11 +24,18 @@ const ArticlePost = () => {
     dispatch(requestArticle(articlesUri))
   }, [dispatch, articlesUri])
 
+  const {pathname} = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
-    <Layout>
-      <h1>{articleBody.title}</h1>
+    <Layout classname={blogPost}>
+      <h1 className={blogPostTitle}>{articleBody.title}</h1>
+      <span className={blogPostDate}>{articleBody.createDate}</span>
       <img width="100%" src={articleBody.image} alt=""/>
-      <p> {articleBody.description}</p>
+      <p className={blogPostParagraph}>{articleBody.description}</p>
       <p> {articleBody.content}</p>
     </Layout>
   )
