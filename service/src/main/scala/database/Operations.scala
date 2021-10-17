@@ -44,8 +44,7 @@ class Operations(implicit var injector: Injector) extends Injectable with Loggin
       case Success(e) => logInfo(s"- Mock data generated ")
       case Failure(e) => logWarning(s"- Mock data was not generated correctly $e")
     }
-
-
   }
+
 
 }

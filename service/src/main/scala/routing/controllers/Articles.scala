@@ -8,7 +8,7 @@ import database.{Definition, QueryFactory}
 import json.JsonConversion
 import logging.Logging
 import models.{Article, Pages, Pagination}
-import routing.controllers.Articles.{GetArticle, GetArticles}
+import routing.controllers.Articles.{GetArticle, GetArticles, PostArticle}
 import scaldi.Injector
 import scaldi.akka.AkkaInjectable
 import slick.jdbc.GetResult
@@ -30,6 +30,14 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
     case GetArticle(parameters) =>
       getArticleContent(parameters)
 
+    case PostArticle(entity) =>
+      postArticle(entity)
+
+  }
+
+  def postArticle(entity: String): Future[Int] = {
+    val parsedArticle = JsonConversion.deserializeJson[Article](entity)
+    db.run(queryFactory.insertArticleQuery(parsedArticle).as[String]).map(_=>1) pipeTo sender()
   }
 
   def getArticleContent(parameters: Map[String, String]): Future[HttpResponse] = {
@@ -120,5 +128,8 @@ object Articles {
   case class GetArticles(parameters: Map[String, String])
 
   case class GetArticle(parameters: Map[String, String])
+
+  case class PostArticle(entity: String)
+
 
 }

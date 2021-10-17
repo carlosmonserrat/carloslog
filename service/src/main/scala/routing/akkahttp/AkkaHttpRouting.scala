@@ -5,13 +5,14 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.server.directives.Credentials
 import akka.pattern.ask
 import akka.util.Timeout
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import logging.Logging
 import routing.Routing
 import routing.controllers.Articles
-import routing.controllers.Articles.{GetArticle, GetArticles}
+import routing.controllers.Articles.{GetArticle, GetArticles, PostArticle}
 import scaldi.akka.AkkaInjectable
 import scaldi.{Injectable, Injector}
 
@@ -29,22 +30,48 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
   private val routes: Route = {
     Route.seal(
       cors()(
-        get {
-          parameterMap { parameters =>
-            path(Segment) {
-              case "ping" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>"))
-              case "favicon.ico" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "no ico"))
-              case "articles" => complete((articles ? GetArticles(parameters)).mapTo[HttpResponse])
-              case "article" => complete((articles ? GetArticle(parameters)).mapTo[HttpResponse])
+        concat(
+          get {
+            parameterMap { parameters =>
+              path(Segment) {
+                case "ping" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h3>pong</h3>"))
+                case "favicon.ico" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "no ico"))
+                case "articles" => complete((articles ? GetArticles(parameters)).mapTo[HttpResponse])
+                case "article" => complete((articles ? GetArticle(parameters)).mapTo[HttpResponse])
+              }
+            }
+          },
+          post {
+            authenticateBasic(realm = "secure site", myUserPassAuthenticator) { userName =>
+              path(Segment) {
+                case "ping" => complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"<h3>pong $userName</h3>"))
+                case "article" => entity(as[String]) {
+                  entity =>
+                    onComplete((articles ? PostArticle(entity)).mapTo[Int]) {
+                      case Success(_) =>
+                        complete(HttpResponse(entity = s"- Article data generated "))
+                      case Failure(e) =>
+                        logWarning(s"- Article was not generated correctly $e")
+                        complete(HttpResponse(entity = s"- Article was not generated correctly $e"))
+                    }
+                }
+              }
             }
           }
-        }
+        )
       )
     )(
       rejectionHandler = GlobalHandlers.globalRejectionHandler,
       exceptionHandler = GlobalHandlers.globalExceptionHandler
     )
   }
+
+  def myUserPassAuthenticator(credentials: Credentials): Option[String] =
+    credentials match {
+      case password@Credentials.Provided(userIdentifier) if password.verify("292611Yoru..") && userIdentifier == "gizzal" => Some(userIdentifier)
+      case _ => None
+    }
+
 
   override def start(host: String, port: Int): Unit = {
     Http().newServerAt(host, port).bind(routes)
