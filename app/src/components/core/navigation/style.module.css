@@ -27,7 +27,7 @@
 }
 
 .navLinkGroup {
-  padding: 8px  ;
+  padding: 8px;
   margin: 0 auto;
 }
 
@@ -36,26 +36,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: white;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 .navLogo {
-   padding: 16px 0;
- }
+  padding: 16px 0;
+}
 
-.border  {
+.border {
   border-left: 2px solid white;
   position: absolute;
   top: 2px;
   bottom: 2px;
-  left:0px;
+  left: 0px;
   transition: 0.2s;
 }
 
-.navLinkText:hover{
+.navLinkText:hover {
   padding-left: 12px;
 }
 
-.navLinkText:hover .border{
+.navLinkText:hover .border {
   border-left: 8px solid white;
 }
 
