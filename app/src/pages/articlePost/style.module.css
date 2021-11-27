@@ -7,13 +7,15 @@
     color: var(--fonts-default-color);
     position: relative;
 }
+
 .blogPostTitle {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    margin: 0;
-    padding-left: 8px;
+    margin: 32px 0 8px 0;
+    line-height: 28px;
     transition: 0.2s;
-    font-size:22px;
+    font-size: 28px;
+    text-transform: uppercase;
 }
 
 .blogPostCategory {
@@ -31,16 +33,16 @@
 
 .blogPostDate {
     font-family: 'Roboto', sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 300;
-    padding-left: 8px;
     transition: 0.2s;
+    margin: 0 0 32px 0;
 }
 
 .blogPostParagraph {
-    font-family: 'Merriweather', serif;
+    font-family: 'Fira Code', serif;
     font-size: 16px;
     color: var(--fonts-default-color);
+    text-align: justify;
+
 }
-
-

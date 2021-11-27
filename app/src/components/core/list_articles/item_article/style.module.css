@@ -7,6 +7,7 @@
     color: var(--fonts-default-color);
     position: relative;
 }
+
 .blogPostTitle {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
@@ -14,11 +15,12 @@
     padding-left: 8px;
     transition: 0.2s;
     max-width: 310px;
-    font-size:22px;
+    font-size: 22px;
+    text-transform: uppercase;
 }
 
 .blogPostLink:hover {
-opacity: 1;
+    opacity: 1;
 }
 
 
@@ -27,7 +29,7 @@ opacity: 1;
 }
 
 .border {
-    border-left: 2px solid  var(--fonts-contrast-color);
+    border-left: 2px solid var(--fonts-contrast-color);
     position: absolute;
     top: 2px;
     bottom: 2px;
@@ -57,7 +59,7 @@ opacity: 1;
 }
 
 .blogPostParagraph {
-    font-family: 'Merriweather', serif;
+    font-family: 'Fira Code', serif;
     font-size: 16px;
     color: #bebebe;
 }

@@ -4,6 +4,8 @@ import {useQuery} from "../../hooks";
 import {useDispatch, useSelector} from "react-redux";
 import {requestArticle} from "../../redux/actions";
 import {useLocation} from "react-router-dom";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {
   blogPostDate,
   blogPostParagraph,
@@ -33,10 +35,18 @@ const ArticlePost = () => {
   return (
     <Layout classname={blogPost}>
       <h1 className={blogPostTitle}>{articleBody.title}</h1>
-      <span className={blogPostDate}>{articleBody.createDate}</span>
-      <img width="100%" src={articleBody.image} alt=""/>
+      <p className={blogPostDate}>{articleBody.createDate}</p>
+      <img width="100%" src={articleBody.image} alt={articleBody.title}/>
       <p className={blogPostParagraph}>{articleBody.description}</p>
-      <p> {articleBody.content}</p>
+      <p className={blogPostParagraph}> {articleBody.content}</p>
+      <SyntaxHighlighter language="scala" style={materialDark}>
+ {
+  `
+d
+            `
+        }
+      </SyntaxHighlighter>
+
     </Layout>
   )
 }

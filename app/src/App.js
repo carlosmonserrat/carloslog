@@ -6,7 +6,7 @@ function App() {
   useEffect(() => {
     WebFont.load({
       google: {
-        families: ['Merriweather', 'Roboto', 'Roboto Condensed']
+        families: [ 'Fira Code', 'Roboto', 'Roboto Condensed']
       }
     });
   }, []);
