@@ -18,7 +18,6 @@ const ImageModal = ({imageUrl}) => {
 
     return (
         <div>
-            <h2>Animated Modal with Header and Footer</h2>
             {!isOpenModal?(
                 <img onClick={openModal} className={blogImage} width="100%" src={imageUrl} alt="some image"/>
             ):<></>}
