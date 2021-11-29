@@ -28,7 +28,6 @@ class QueryFactory {
   }
 
   def insertArticleQuery(article: Article): SQLActionBuilder = {
-    println(article)
     val randomUUID = UUID.randomUUID.toString
     val timeNow = LocalDateTime.now().toString()
     article match {
