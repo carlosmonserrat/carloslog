@@ -51,7 +51,8 @@ class QueryFactory {
   def selectArticlesQuery(offset: Int, limit: Int): SQLActionBuilder = {
     sql"""
          SELECT id,title,create_date,last_update,image,description
-         FROM articles_meta ORDER BY create_date OFFSET #$offset LIMIT #$limit
+         FROM articles_meta
+         ORDER BY create_date DESC OFFSET #$offset LIMIT #$limit
        """
   }
 
