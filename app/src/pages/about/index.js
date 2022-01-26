@@ -6,7 +6,7 @@ const About = () => {
 
     <h1>Hi!</h1>
     <p>My name is Carlos Monserrat, thanks for the visit. </p>
-    <p>You can take a look to my cv in this link <a href="#">The CV</a>. But you can also enjoy some of my thoughts and
+    <p>You can take a look to my cv in this link ____The CV____. But you can also enjoy some of my thoughts and
       words in the follow section.</p>
     <p>
       In the last couple of years since 2012 I got the chance to work in the software industry and gain some good

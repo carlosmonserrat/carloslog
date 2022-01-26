@@ -23,7 +23,6 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
   private val config = inject[Config]
 
   def receive: Receive = {
-
     case GetArticles(parameters) =>
       getArticles(parameters)
 
@@ -32,7 +31,6 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
 
     case PostArticle(entity) =>
       postArticle(entity)
-
   }
 
   def postArticle(entity: String): Future[Int] = {
@@ -41,7 +39,6 @@ class Articles(implicit injector: Injector) extends Actor with AkkaInjectable wi
   }
 
   def getArticleContent(parameters: Map[String, String]): Future[HttpResponse] = {
-
     val articleId = parameters.getOrElse("id", "")
     (for {
       article <- db.run(queryFactory.selectArticleQuery(articleId).as[Article](GetResult(result =>

@@ -64,12 +64,9 @@ class QueryFactory {
          AND c.id = '#${id.querySanitize}'
        """
   }
-
-
 }
 
 object QueryFactory {
-
   implicit class customQueryString(query: String) {
     def querySanitize: String = query.replace("'", "''")
   }
@@ -84,5 +81,4 @@ object QueryFactory {
   }
 
   case class TableDefinitions(tableName: String, definition: String)
-
 }

@@ -67,7 +67,7 @@ textSyntaxRules.set(
   )
 )
 
-export const textEnrich = (text: String) => {
+export const textEnrich = (text) => {
   let result = text;
   textSyntaxRules.forEach((value, key) => {
       result = reactStringReplace(result, key, value)
@@ -76,4 +76,4 @@ export const textEnrich = (text: String) => {
   return result
 }
 
-export default [textEnrich]
+export default textEnrich
