@@ -1,4 +1,4 @@
-import {takeLatest, all, put, call} from 'redux-saga/effects'
+import {all, call, put, takeLatest} from 'redux-saga/effects'
 import {REQUEST_ARTICLE, REQUEST_ARTICLES, requestArticlesSucceed, requestArticleSucceed} from "../actions";
 
 const requestArticles = function* (action) {
@@ -13,12 +13,10 @@ const requestArticle = function* (action) {
   yield put(requestArticleSucceed(body))
 };
 
-
 export function* requests() {
   yield takeLatest(REQUEST_ARTICLES, requestArticles)
   yield takeLatest(REQUEST_ARTICLE, requestArticle)
 }
-
 
 export default function* rootSaga() {
   yield all([requests()])

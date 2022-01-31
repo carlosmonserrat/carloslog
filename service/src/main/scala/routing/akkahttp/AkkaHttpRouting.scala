@@ -26,7 +26,7 @@ class AkkaHttpRouting(implicit injector: Injector) extends Injectable with AkkaI
   implicit lazy val akkaActorRequestTimeOut: Timeout = Timeout(FiniteDuration(5, MINUTES))
 
   val articles: ActorRef = injectActorRef[Articles]
-
+ 
   private val routes: Route = {
     Route.seal(
       cors()(

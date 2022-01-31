@@ -2,7 +2,7 @@ import * as React from 'react'
 import style from "./style.module.css"
 
 const scrollUpAndGetPage = (page, getNewPages,scrollY) => {
-    console.log(scrollY.scrollTop)
+    window.scrollTo(0, 0);
     getNewPages(page)
 }
 
