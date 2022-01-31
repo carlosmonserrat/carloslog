@@ -21,6 +21,3 @@ export function* requests() {
 export default function* rootSaga() {
   yield all([requests()])
 }
-
-
-

@@ -6,7 +6,7 @@ export const REQUEST_ARTICLE_SUCCEED = 'REQUEST_ARTICLE_SUCCEED';
 export const requestArticles = (apiUrl) => {
   return {
     type: REQUEST_ARTICLES,
-    apiUrl:apiUrl
+    apiUrl: apiUrl
   }
 };
 
@@ -23,7 +23,7 @@ export const requestArticlesSucceed = (body) => (
 export const requestArticle = (apiUrl) => {
   return {
     type: REQUEST_ARTICLE,
-    apiUrl:apiUrl
+    apiUrl: apiUrl
   }
 };
 
@@ -33,5 +33,3 @@ export const requestArticleSucceed = (body) => (
     body: body
   }
 );
-
-

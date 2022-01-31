@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
-import {REQUEST_ARTICLES_SUCCEED,REQUEST_ARTICLE_SUCCEED} from "../actions"
+import {REQUEST_ARTICLE_SUCCEED, REQUEST_ARTICLES_SUCCEED} from "../actions"
 
 const initialState = {
   articlesBody: {
     articles: [],
     pagination: {}
   },
-  articleBody:{}
+  articleBody: {}
 }
 
 const articlesBody = (state = initialState.articlesBody, action) => {
@@ -29,7 +29,7 @@ const articleBody = (state = initialState.articleBody, action) => {
 
 const reducers = combineReducers({
   articlesBody: articlesBody,
-  articleBody:articleBody
+  articleBody: articleBody
 })
 
 export default reducers
